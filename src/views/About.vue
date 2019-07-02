@@ -44,6 +44,14 @@ export default class About extends Vue {
         let someValue: any = 'string'
         let strLength: number = (someValue as string).length
         console.log(strLength)
+
+        let obj = { size: 10, label: 'sdfsdfsdfsd' }
+        this.printLabel(obj)
+    }
+
+    printLabel (labelObj: { label: string }) {
+        console.log(labelObj)
+        console.log(labelObj.label)
     }
 }
 </script>
