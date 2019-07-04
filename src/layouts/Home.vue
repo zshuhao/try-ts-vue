@@ -88,6 +88,7 @@ export default class Home extends Vue {
 
         const dog = new Dog()
         dog.bark()
+
         dog.move(100)
     }
 }
