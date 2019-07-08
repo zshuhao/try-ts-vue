@@ -11,7 +11,7 @@ export default new Vuex.Store({
             expired: Date.now() // 失效时间，以毫秒数记录
         },
         oaAccess: {
-            token: '',
+            token: '12121212123333',
             expired: Date.now() // 失效时间，以毫秒数记录
 
         },
@@ -37,5 +37,10 @@ export default new Vuex.Store({
     },
     actions: {
 
+    },
+    getters: {
+        getOaAccess (state) {
+            return state.oaAccess
+        }
     }
 })

@@ -29,6 +29,14 @@
                     <span slot="title">流程管理-后台</span>
                 </el-menu-item>
             </el-submenu>
+            <el-menu-item index="/about">
+                <i class="el-icon-menu"></i>
+                <span slot="title">关于</span>
+            </el-menu-item>
+            <el-menu-item index="/message">
+                <i class="el-icon-menu"></i>
+                <span slot="title">信息</span>
+            </el-menu-item>
         </el-menu>
 
         <!-- <el-menu

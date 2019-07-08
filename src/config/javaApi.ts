@@ -1,6 +1,6 @@
 
-interface Foo {
-    [x: string]: any
+interface IjavaApi {
+    [index: string]: string
 }
 
 const javaApi = {
@@ -8,6 +8,6 @@ const javaApi = {
     dev: '//kt-dev.st.9now.net',
     // dev: '//10.0.17.177:7003', // 开发环境
     production: '//gateway-infc.mwee.cn' // 正式环境
-} as any
+} as IjavaApi
 
 export default javaApi
