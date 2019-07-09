@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 // interface Table {
 
 // }
@@ -58,15 +58,15 @@ export default class Table extends Vue {
         console.log('111111')
     }
 
-    handleClick (index: number, data: object) {
-        this.$emit('rowClick', { type: index, data })
+    @Emit('rowClick')
+    handleClick (index: number, data: object): object {
+        return { type: index, data }
     }
-    selectionChange (val: object[]) {
-        this.$emit('selectChange', val)
+    @Emit('selectChange')
+    selectionChange (val: object[]): object[] {
+        return val
     }
     tableHeaderColor (config: ITableHeaderColor): { backgroundColor: string } {
-        // console.log(config.row)
-        // console.log(config.rowIndex)
         return { backgroundColor: '#eee' }
     }
 }

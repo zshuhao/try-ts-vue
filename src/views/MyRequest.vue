@@ -25,13 +25,15 @@
                 @pagination="getOrderList">
             </Pagination>
             <el-button @click="test">btn</el-button>
+            <el-button>@Getter {{userInfo}}</el-button>
+            <el-button>@State {{userName}}</el-button>
         </div>
     </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import { State, Getter } from 'vuex-class'
+import { State, Getter, Action } from 'vuex-class'
 import Table from '@/components/Table.vue'
 import Pagination from '@/components/Pagination.vue'
 const mapStatus = {
@@ -42,14 +44,17 @@ const mapStatus = {
 }
 // 包含的类型，不显示重新申请按钮
 const processType = ['EXCHANGE_ORDER']
+
+// 如果 module使用了 namespace，这里也需要
+const namespace: string = 'userInfo'
 @Component({
     components: { Table, Pagination }
 })
 export default class MyRequest extends Vue {
-    // @State('oaAccess') oaInfo: any
-    // @Getter('getOaAccess') getOaInfo: any
-    @Getter getOaAccess: any
-    @State oaAccess: any
+    @State('userInfo') userName: any
+    @State('author') authorName: any
+    @Getter('getUserInfo', { namespace }) userInfo: any
+    @Action('setUserInfo', { namespace }) setUserInfo: any
 
     tableHeader = [
         { prop: 'title', label: '标题' },
@@ -106,10 +111,10 @@ export default class MyRequest extends Vue {
         console.log(this.params)
     }
     test () {
-        // console.log(this.oaInfo)
-        // console.log(this.getOaInfo)
-        console.log(this.getOaAccess)
-        console.log(this.oaAccess)
+        console.log(this.userName)
+        console.log(this.authorName)
+        console.log(this.userInfo)
+        this.setUserInfo('啊哈哈')
     }
 }
 </script>

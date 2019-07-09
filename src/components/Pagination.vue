@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 
 @Component({})
 export default class Pagination extends Vue {
@@ -39,11 +39,13 @@ export default class Pagination extends Vue {
         this.$emit('update:limit', val)
     }
 
-    handleSizeChange (val: any) {
-        this.$emit('pagination', { page: this.currentPage, limit: val, total: this.total })
+    @Emit('pagination')
+    handleSizeChange (val: number): object {
+        return { page: this.currentPage, limit: val, total: this.total }
     }
-    handleCurrentChange (val: any) {
-        this.$emit('pagination', { page: val, limit: this.pageSize, total: this.total })
+    @Emit('pagination')
+    handleCurrentChange (val: number): object {
+        return { page: val, limit: this.pageSize, total: this.total }
     }
 }
 

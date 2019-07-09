@@ -4,7 +4,7 @@ import urlDict from '../config/urlDict'
 import phpApi from '../config/phpApi'
 import javaApi from '../config/javaApi'
 import basicToken from '../config/basicToken'
-import store from '../store/store'
+import store from '../store/index'
 
 let protocol = ENV === 'production' ? 'https:' : 'http:'
 
