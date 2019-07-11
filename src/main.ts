@@ -3,9 +3,10 @@ import App from './App.vue'
 import router from './router/router'
 import store from './store/index'
 import './assets/reset.css'
-
+import ajax from './utils/ajax'
 import './plugins/element'
 
+Vue.prototype.$ajax = ajax
 Vue.config.productionTip = false
 
 new Vue({

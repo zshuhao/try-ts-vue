@@ -1,7 +1,14 @@
 
 import { RootStateTypes } from './types'
 const state: RootStateTypes = {
-    author: '陈小生'
+    author: '陈小生',
+    accessToken: {
+        token: '',
+        md5Code: ''
+    },
+    oaAccess: {
+        token: ''
+    }
 }
 
 export default state

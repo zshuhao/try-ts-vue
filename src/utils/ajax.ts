@@ -3,6 +3,7 @@ import ENV from '../config/env'
 import urlDict from '../config/urlDict'
 import phpApi from '../config/phpApi'
 import javaApi from '../config/javaApi'
+// import basicToken from '../config/basicToken'
 import basicToken from '../config/basicToken'
 import store from '../store/index'
 
@@ -23,6 +24,11 @@ axios.defaults.timeout = 30000 // 请求的超时时间
 // }
 
 let ajax = (options:any) => {
+    console.log(phpApi)
+    console.log(javaApi)
+    console.log(basicToken)
+    console.log(urlDict)
+    console.log(store)
     let header = options.headers || options.header || {
         'Content-Type': 'application/json;charset=UTF-8'
     }
