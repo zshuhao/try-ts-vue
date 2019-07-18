@@ -5,19 +5,14 @@ import Home from '../layouts/Home.vue'
 Vue.use(Router)
 
 export default new Router({
-    mode: 'history',
-    base: process.env.BASE_URL,
+    // mode: 'history',
+    // base: process.env.BASE_URL,
     routes: [
         {
             path: '/',
             name: 'home',
             component: Home,
             children: [
-                {
-                    path: '/my-request', // 我的请求
-                    name: 'MyRequest',
-                    component: () => import(/* webpackChunkName: "about" */ '../views/MyRequest.vue')
-                },
                 {
                     path: '/about',
                     name: 'about',
@@ -30,6 +25,16 @@ export default new Router({
                     path: '/message',
                     name: 'message',
                     component: () => import(/* webpackChunkName: "about" */ '../views/Message.vue')
+                },
+                {
+                    path: '/goodsList', // 商品列表
+                    name: 'List',
+                    component: () => import(/* webpackChunkName: "about" */ '../views/Goods/List.vue')
+                },
+                {
+                    path: '/goodsDetail', // 基础信息
+                    name: 'Detail',
+                    component: () => import(/* webpackChunkName: "about" */ '../views/Goods/Detail.vue')
                 }
             ]
         }

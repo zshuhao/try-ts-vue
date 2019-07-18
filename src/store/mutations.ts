@@ -6,8 +6,8 @@ const mutations: MutationTree<RootStateTypes> = {
     setAccessToken (state: RootStateTypes, data: string) {
         state.accessToken.token = data
     },
-    setOaAccess (state: RootStateTypes, data: string) {
-        state.oaAccess.token = data
+    setKtAccess (state: RootStateTypes, data: string) {
+        state.ktAccess.token = data
     }
 }
 

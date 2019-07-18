@@ -3,10 +3,9 @@ import { RootStateTypes } from './types'
 const state: RootStateTypes = {
     author: '陈小生',
     accessToken: {
-        token: '',
-        md5Code: ''
+        token: ''
     },
-    oaAccess: {
+    ktAccess: {
         token: ''
     }
 }

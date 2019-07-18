@@ -1,6 +1,6 @@
 const backtoUs = {
-    test: 'http://oa.test.9now.net/webresourceoa/workflow/#',
-    production: 'https://ktm.mweer.com/webresource/workflow/#', // TODO
-    dev: 'http://oa.test.9now.net/webresourceoa/workflow/#'
+    test: 'http://info-ktm.test.9now.net/webresource/cmpWeb/#',
+    production: 'http://kt.mwee.cn/webresource/cmpWeb/#', // TODO
+    dev: 'http://10.88.2.199:8050/#'
 } as any
 export default backtoUs

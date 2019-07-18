@@ -1,7 +1,23 @@
 <template>
     <el-aside class="sider">
         <el-menu class="menu" :router="true" :default-active="$route.path">
-            <el-submenu index="1">
+            <el-menu-item index="/about">
+                <i class="el-icon-notebook-2"></i>
+                <span slot="title">关于</span>
+            </el-menu-item>
+            <el-menu-item index="/message">
+                <i class="el-icon-notebook-2"></i>
+                <span slot="title">信息</span>
+            </el-menu-item>
+            <el-menu-item index="/goodsList">
+                <i class="el-icon-notebook-2"></i>
+                <span slot="title">商品列表</span>
+            </el-menu-item>
+            <el-menu-item index="/goodsDetail">
+                <i class="el-icon-notebook-2"></i>
+                <span slot="title">商品信息</span>
+            </el-menu-item>
+            <!-- <el-submenu index="1">
                 <template slot="title">
                     <i class="el-icon-location"></i>
                     <span>事务流程</span>
@@ -28,15 +44,7 @@
                     <i class="el-icon-menu"></i>
                     <span slot="title">流程管理-后台</span>
                 </el-menu-item>
-            </el-submenu>
-            <el-menu-item index="/about">
-                <i class="el-icon-menu"></i>
-                <span slot="title">关于</span>
-            </el-menu-item>
-            <el-menu-item index="/message">
-                <i class="el-icon-menu"></i>
-                <span slot="title">信息</span>
-            </el-menu-item>
+            </el-submenu> -->
         </el-menu>
 
         <!-- <el-menu
