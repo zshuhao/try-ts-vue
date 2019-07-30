@@ -19,7 +19,7 @@
                     </el-button-group>
                 </el-form-item>
             </el-form>
-            <Table :tableHeader="TableHeader" :tableData="tableDate">
+            <Table :tableHeader="TableHeader" :tableData="goodsList">
                 <el-table-column slot="handle-left" label="操作" align="center">
                     <template slot-scope="scope">
                         <el-button type="text" @click="goDetail(scope.row)">查看</el-button>
@@ -37,6 +37,13 @@ import { Vue, Component } from 'vue-property-decorator'
 import Table from '@/components/Table.vue'
 import Pagination from '@/components/Pagination.vue'
 
+interface Params {
+    keyWord: string
+    onSale: string
+    pageIndex: number
+    pageSize: number
+}
+
 @Component({
     components: { Pagination, Table }
 })
@@ -44,18 +51,65 @@ export default class List extends Vue {
     msg = ''
     value = ''
     TableHeader = [
-        { prop: 'name', label: '商品名称' },
-        { prop: 'id', label: '商品编码' },
-        { prop: 'status', label: '上下架状态' }
+        { prop: 'cuxItemDescription', label: '商品名称' },
+        { prop: 'cuxItemId', label: '商品编码' },
+        { prop: 'formatCuxItemPutawayYN', label: '上下架状态' }
     ]
-    tableDate = [
-        { name: 'sdfas', id: '123', status: 1 },
-        { name: 'as', id: '123', status: 1 },
-        { name: '2', id: '123', status: 1 }
-    ]
+    goodsList = []
+    queryParams: Params = {
+        keyWord: '',
+        onSale: '', // 业务线编码
+        pageIndex: 1,
+        pageSize: 10
+    }
+    listTotal = 0
+    loading = false
+    syncBtn = false
+
+    fetchGoodsList () {
+        this.loading = true
+        this.$ajax({
+            method: 'POST',
+            type: 'fetchGoodsList',
+            data: this.queryParams
+        }).then((res: any) => {
+            if (res.data.success && res.data.data) {
+                const { pageIndex, recordCount, skuList } = res.data.data
+                this.queryParams.pageIndex = pageIndex
+                this.listTotal = recordCount
+                this.goodsList = skuList.map((item: any) => {
+                    item.formatCuxItemPutawayYN = item.cuxItemPutawayYN === 'Y'
+                        ? '上架'
+                        : '下架'
+                    return item
+                })
+            }
+            this.loading = false
+        })
+    }
+    synceGoodsList () {
+        this.syncBtn = true
+        this.$ajax({
+            method: 'POST',
+            type: 'synceGoodsList'
+        }).then((res: any) => {
+            const type = res.data.success ? 'success' : 'error'
+            const msg = res.data.success ? '同步成功' : '同步失败'
+            this.$message[type](msg)
+            this.fetchGoodsList()
+            this.syncBtn = false
+        }).catch(() => {
+            this.syncBtn = false
+        })
+    }
 
     goDetail (val: any) {
-        console.log(val)
+        this.$router.push({
+            path: '/goodsDetail',
+            query: {
+                id: val.id
+            }
+        })
     }
 }
 </script>

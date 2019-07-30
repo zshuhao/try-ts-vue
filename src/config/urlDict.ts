@@ -21,6 +21,18 @@ let urlDict = {
     getKtMenu: {
         url: '/api/web/getMenu', // 获取开天菜单
         needKtAuth: true
+    },
+    fetchGoodsList: { // 获取商品列表
+        url: '/orderCenter/sku/page',
+        needLogin: true
+    },
+    synceGoodsList: { // 同步erp商品
+        url: '/orderCenter/manualTask/syncErpMaterial',
+        needLogin: true
+    },
+    getGoodsInfo: { // 获取商品信息
+        url: '/orderCenter/sku/:id',
+        needLogin: true
     }
 } as any
 

@@ -14,12 +14,12 @@
 
 <script lang="ts">
 import { Vue, Component, Mixins } from 'vue-property-decorator'
+import { urlParse } from '../utils/utils'
+import { Mutation, State } from 'vuex-class'
 import Header from './Header.vue'
 import Sider from './Sider.vue'
 import UserLogin from '../mixins/userLogin'
-import { urlParse } from '../utils/utils'
-import { Mutation, State } from 'vuex-class'
-
+import checkLogin from '@/utils/checkLogin'
 @Component({
     components: { Header, Sider }
 })
@@ -32,14 +32,25 @@ export default class Home extends Mixins(UserLogin) {
     flag = false
 
     async created (): Promise<void> {
-        const query = this.$route.query
-        this.setKtAccess(query.infp_kt_token || '')
-        const { token } = this.ktAccess
-        if (token) {
+        const { query, path } = this.$route
+        const queryToken = query.infp_kt_token
+        // 如果url中有ktToken则每次都去获取accessToken，没有再去检测本地保存的ktToken是否在有效期内
+        if (queryToken) {
+            const ktAccess = {
+                token: queryToken,
+                expired: Date.now() + 0.1 * 3600 * 1000
+            }
+            this.$store.commit('KTACCESS', ktAccess)
+            const { token } = this.$store.state.ktAccess
             this.flag = await this.getAccessToken(token)
-            // this.getLeftMenu(token)
+            this.getMenu(token)
+        } else if (checkLogin()) {
+            const { token } = this.$store.state.ktAccess
+            this.flag = true
+            this.getMenu(token)
+            this.getPermisson() // 获取用户信息
         } else {
-            // 跳回去重新拉infp_kt_token
+            this.getKTCode(path)
         }
     }
 }

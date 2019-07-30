@@ -4,7 +4,10 @@
 
 import { Vue, Component } from 'vue-property-decorator'
 import { Mutation } from 'vuex-class'
-
+import { Message } from 'element-ui'
+import env from '../config/env'
+import ktApi from '../config/ktHost'
+import backtoUs from '../config/backtoUs'
 @Component({})
 export default class UserLogin extends Vue {
     @Mutation setAccessToken: any
@@ -36,57 +39,44 @@ export default class UserLogin extends Vue {
             })
         })
     }
-    // getOACode (cbPath: string) { // 获取OA的路由code
-    //     console.log(this)
-    //     let params = {
-    //         type: 'getMenu'
-    //     }
-    //     this.$ajax(params).then((res: any) => {
-    //         console.log(res)
-    //         console.log('================11111')
-    //         if (res.data && res.data.data && res.data.data.redirect_url) {
-    //             let uri = oaRedirectHost[env]
-    //             let cbUrl = encodeURIComponent(backtoUs[env])
-    //             // token 失效 跳转页面重新获取token
-    //             window.location.href = `${uri}?callback_url=${cbUrl}${cbPath}`
-    //         }
-    //     })
-    // }
-    // getNavMenu (token: string) { // 获取OA的菜单
-    //     this.$ajax({
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'infp-oa-token': token
-    //             // 'infp-oa-token': '68ffeba259d3ee7bc7868ba4ad9fbe23'
-    //         },
-    //         type: 'getMenu'
-    //     }).then((res: any) => {
-    //         if (res.data.status === 1000 || res.data.status === 1001 || res.data.data.redirect_url) {
-    //             if (res.data.data.redirect_url) {
-    //                 // 输入redirect_url链接之后跳转到OA测试环境去了
-    //                 let url = res.data.data.redirect_url
-    //                 window.location.href = url
-    //             }
-    //         } else {
-    //             this.menuList = res.data.data.menu
-    //             console.log(res.data.data.menu)
-    //         }
-    //     })
-    // }
 
     getPermisson () { // 获取用户信息
-        console.log('getPermisson')
         this.$ajax({
             type: 'userPermission',
             method: 'GET'
         }).then((res: any) => {
             if (res.data.success && res.data.data) {
-                // this.userInfo = res.data.data.userName
-                console.log(res.data.data)
-                // this.$store.commit('USERINFO', res.data.data)
-                // this.$router.push('/new')
-                // this.userInfo = res.data.data
+                this.$store.commit('USERINFO', res.data.data)
             }
+        }).catch((err: any) => {
+            this.$message(err.message)
+        })
+    }
+
+    getKTCode (cbPath: string): void { // 获取OA的路由code
+        let uri = ktApi[env]
+        let cbUrl = encodeURIComponent(backtoUs[env])
+        // token 失效 跳转页面重新获取token
+        window.location.href = `${uri}/auth/redirectUrl?callback_url=${cbUrl}${cbPath}`
+    }
+
+    getMenu (token: string): void {
+        this.$ajax({
+            headers: {
+                'Content-Type': 'application/json',
+                'infp-kt-token': token
+            },
+            method: 'GET',
+            type: 'getKtMenu'
+        }).then((res: any) => {
+            if (res.data.status) {
+                Message.error(`${res.data.msg}`)
+            } else {
+                const { menus } = res.data.data
+                this.$store.commit('KTMENU', menus)
+            }
+        }).catch(() => {
+            Message.error(`请求错误`)
         })
     }
 }
